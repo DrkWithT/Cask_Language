@@ -25,7 +25,7 @@ char *file_load(const char *file_path)
     fseek(fs, 0, SEEK_SET);
 
     if (content_size < 0)
-        return content_buffer;
+        goto release_fs_point;
 
     content_buffer = calloc((content_size + 1), sizeof(char));
 
@@ -41,6 +41,10 @@ char *file_load(const char *file_path)
         }
     }
 
+    /// @note Cleanup execution point: closes file stream.
+release_fs_point:
+    fclose(fs);
+    fs = NULL;
     return content_buffer;
 }
 
