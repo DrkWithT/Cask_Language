@@ -1,6 +1,8 @@
 # Cask Grammar
 
 ## Notes:
+ - Comments are multi-line by default.
+    - Delimited by `'#'`.
  - `agg` means a data structure wrapping one or more typed attributes. This will be like a C `struct`.
  - Math operators: `+, -, *, /`
  - Equality, comparison operators: `==, !=, >, >=, <, <=`
@@ -10,6 +12,7 @@
 
 ```bnf
 ; basic elements
+comment ::= "#" (ANY)* "#"
 identifier ::= (ALPHA | "_")+ ; can be identifier or custom aggregate name
 primtype ::= "bool" | "int" | "float" | "string"
 aggtype ::= identifier
