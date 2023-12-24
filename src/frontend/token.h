@@ -14,6 +14,7 @@ typedef enum cask_lexical_type
     CASK_INTEGER_TOKEN,
     CASK_FLOAT_TOKEN,
     CASK_STRING_TOKEN,
+    CASK_COMMA_TOKEN,
     CASK_COLON_TOKEN,
     CASK_LPAREN_TOKEN,
     CASK_RPAREN_TOKEN,
@@ -35,5 +36,6 @@ char *token_stringify(const Token *token, const char *source);
 
 #define CASK_TOKEN_PTR_IS_EMPTY(token) (token->length == 0U)
 #define CASK_TOKEN_IS_EOF(token) (token->type == CASK_EOF_TOKEN)
+#define CASK_TOKEN_IS_SYMBOLIC(token) (token->type >= CASK_COMMA_TOKEN && token->type <= CASK_RBRACE_TOKEN)
 
 #endif
