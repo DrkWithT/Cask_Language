@@ -1,0 +1,11 @@
+#
+    hello.cask
+    A Hello World program.
+#
+
+from "io" import puts
+
+func main() : int
+    puts("Hello World!")
+    return 0
+end
