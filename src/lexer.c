@@ -35,7 +35,10 @@ bool predicate_is_alphanum(char c)
 
 bool predicate_is_symbolic(char c)
 {
-    return c == '=' || c == '!' || c == '>' || c == '<' || c == '+' || c == '-' || c == '*' || c == '/';
+    return c == '=' || c == '!'
+        || c == '>' || c == '<'
+        || c == '+' || c == '-' || c == '*' || c == '/'
+        || c == '|' || c == '&';
 }
 
 /* Lexer impl. */
