@@ -146,4 +146,9 @@ Token lexer_yield_token(Lexer *lexer)
     return (Token){.begin = lexer->source_index, .length = 1U, .type = CASK_UNKNOWN_TOKEN};
 }
 
-// void lexer_reset(Lexer *lexer, char *source_cstr);
+void lexer_reset(Lexer *lexer, char *source_cstr)
+{
+    lexer->source_view = source_cstr;
+    lexer->source_index = 0U;
+    lexer->source_length = strlen(source_cstr);
+}
