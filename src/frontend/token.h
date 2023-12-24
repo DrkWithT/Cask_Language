@@ -7,13 +7,12 @@ typedef enum cask_lexical_type
 {
     CASK_COMMENT_TOKEN,
     CASK_SPACING_TOKEN,
-    CASK_KEYWORD_TOKEN,
     CASK_RESERVED_TOKEN,
-    CASK_IDENTIFIER_TOKEN,
     CASK_OPERATOR_TOKEN,
-    CASK_INTEGER_TOKEN,
-    CASK_FLOAT_TOKEN,
+    CASK_BOOLEAN_TOKEN,
+    CASK_DIGITS_TOKEN,
     CASK_STRING_TOKEN,
+    CASK_DOT_TOKEN,
     CASK_COMMA_TOKEN,
     CASK_COLON_TOKEN,
     CASK_LPAREN_TOKEN,
@@ -23,6 +22,7 @@ typedef enum cask_lexical_type
     CASK_LBRACE_TOKEN,
     CASK_RBRACE_TOKEN,
     CASK_EOF_TOKEN,
+    CASK_UNKNOWN_TOKEN
 } LexicalType;
 
 typedef struct cask_token_t
