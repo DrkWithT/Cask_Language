@@ -2,7 +2,9 @@
 
 ### Simple Aggregate
 ```
-    # 2d point structure!
+    #
+        2d point structure!
+    #
     agg Point {
         int x
         int y
@@ -13,7 +15,9 @@
 
 ### Simple Function
 ```
-    # Does a linear search on an array of int values.
+    #
+        Does a linear search on an array of int values.
+    #
     func search_int(numbers : int[], item : int)
         count : int = length(numbers)
         index : int = 0
@@ -32,7 +36,9 @@
 
 ### Recursive (divide and conquer) Function
 ```
-    # Finds a^n by recursive divide and conquer strategy.
+    #
+        Finds a^n by recursive divide and conquer strategy.
+    #
     func dq_pow(base : int , pow : int)
         if (pow == 0)
             return 1

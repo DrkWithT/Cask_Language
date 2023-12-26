@@ -1,0 +1,33 @@
+#
+    apow.cask
+    Finds a^n by recursive divide and conquer strategy.
+#
+
+from "io" import putf
+
+func dc_pow(base : int , pow : int)
+    if (pow == 0)
+        return 1
+    end
+
+    if (pow == 1)
+        return base
+    end
+
+    even_p : int = pow / 2
+    odd_p : int = (pow - 1) / 2
+
+    if (is_even(pow) == true)
+        return dc_pow(base, even_p) * dc_pow(base, even_p)
+    else
+        return base * dc_pow(base, odd_p) * dc_pow(base, odd_p)
+    end
+end
+
+func main() : int
+    a : int = 2
+    n : int = 5
+    putf("%i exp %i = %i\n", a, n, dc_pow(a, n))
+
+    return 0
+end

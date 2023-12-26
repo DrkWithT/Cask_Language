@@ -43,7 +43,7 @@ func-decl ::= "func" identifier "(" (param-decl)* ")" block
 param-decl ::= identifier ":" (primtype | aggtype | arrtype)
 
 ; composite statements
-"from" string-literal "import" identififer ("," identifier)*
+import-stmt ::= "from" string-literal "import" "*" | (identififer ("," identifier)*)
 while-stmt ::= "while" "(" conditional-expr ")" block
 if-stmt ::= "if" "(" conditional-expr ")" block (else-stmt){1}
 else-stmt ::= "else" block
