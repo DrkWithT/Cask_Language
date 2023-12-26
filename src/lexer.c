@@ -132,18 +132,20 @@ Token lexer_yield_token(Lexer *lexer)
     default:
         if (predicate_is_spacing(temp))
             return lexer_lex_by(lexer, CASK_SPACING_TOKEN, predicate_is_spacing);
-        if (temp == '#')
+        else if (temp == '#')
             return lexer_lex_until(lexer, CASK_COMMENT_TOKEN, temp);
-        if (predicate_is_alpha(temp))
+        else if (temp == '\"')
+            return lexer_lex_until(lexer, CASK_STRING_TOKEN, temp);
+        else if (predicate_is_alpha(temp))
             return lexer_lex_by(lexer, CASK_RESERVED_TOKEN, predicate_is_alpha);
-        if (predicate_is_numeric(temp))
+        else if (predicate_is_numeric(temp))
             return lexer_lex_by(lexer, CASK_DIGITS_TOKEN, predicate_is_numeric);
-        if (predicate_is_symbolic(temp))
+        else if (predicate_is_symbolic(temp))
             return lexer_lex_by(lexer, CASK_OPERATOR_TOKEN, predicate_is_symbolic);
+        else
+            return (Token){.begin = lexer->source_index, .length = 1U, .type = CASK_UNKNOWN_TOKEN};
         break;
     }
-
-    return (Token){.begin = lexer->source_index, .length = 1U, .type = CASK_UNKNOWN_TOKEN};
 }
 
 void lexer_reset(Lexer *lexer, char *source_cstr)
