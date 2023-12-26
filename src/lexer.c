@@ -137,7 +137,7 @@ Token lexer_yield_token(Lexer *lexer)
         if (predicate_is_alpha(temp))
             return lexer_lex_by(lexer, CASK_RESERVED_TOKEN, predicate_is_alpha);
         if (predicate_is_numeric(temp))
-            return lexer_lex_by(lexer, CASK_DIGITS_TOKEN, predicate_is_numeric(temp));
+            return lexer_lex_by(lexer, CASK_DIGITS_TOKEN, predicate_is_numeric);
         if (predicate_is_symbolic(temp))
             return lexer_lex_by(lexer, CASK_OPERATOR_TOKEN, predicate_is_symbolic);
         break;
