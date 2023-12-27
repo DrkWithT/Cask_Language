@@ -19,16 +19,16 @@ aggtype ::= identifier
 arrtype ::= (primtype | aggtype) "[" "]"
 nil-literal ::= "nil"
 bool-literal ::= "true" | "false"
-integer-literal ::= (DIGIT)+
-float-literal ::= (DIGIT)+ "." (DIGIT)+
+integer-literal ::= ("-"){0,1} (DIGIT)+
+float-literal ::= ("-"){0,1} (DIGIT)+ "." (DIGIT)+
 string-literal ::= "\"" (ALPHA)* "\""
 agg-literal ::= "{" literal ("," literal)* "}"
 array-literal ::= "[" (basic ",")* "]"
 
 ; expressions
-basic ::= nil-literal | bool-literal | integer-literal | float-literal | string-literal | agg-literal | identifier | "(" equality-expr ")"
-negate-expr ::= "-" basic
-term-expr ::= basic (("+" | "-") basic)+
+basic ::= nil-literal | bool-literal | integer-literal | float-literal | string-literal | array-literal | agg-literal | identifier | "(" equality-expr ")"
+access-expr ::= basic "[" integer-literal | string-literal | identifier "]"
+term-expr ::= access-expr (("+" | "-") access-expr)+
 factor-expr ::= term-expr ("*" | "/" term-expr)
 comparison-expr ::= factor-expr (("<" | "<=" | ">" | ">=") factor-expr)+
 equality-expr ::= comparison-expr (("==" | "!=") comparison-expr)+
@@ -42,8 +42,8 @@ arr-decl ::= identifier ":" arrtype "=" array-literal
 func-decl ::= "func" identifier "(" (param-decl)* ")" block
 param-decl ::= identifier ":" (primtype | aggtype | arrtype)
 
-; composite statements
-import-stmt ::= "from" string-literal "import" "*" | (identififer ("," identifier)*)
+; action statements
+import-stmt ::= "from" identifier "import" "*" | (identififer ("," identifier)*)
 while-stmt ::= "while" "(" conditional-expr ")" block
 if-stmt ::= "if" "(" conditional-expr ")" block (else-stmt){1}
 else-stmt ::= "else" block
