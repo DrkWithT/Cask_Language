@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "collection/vectors.h"
+
 /* AST type codes */
 
 typedef enum cask_datatype_e
@@ -79,12 +81,12 @@ typedef struct cask_expr_t
         
         struct
         {
-            void *value; /// @todo add GenericArray in node??
+            Vector values;
         } array;
         
         struct
         {
-            void *members;
+            Vector literals;
         } aggregate;
 
         struct
@@ -139,6 +141,20 @@ typedef struct cask_expr_t
     bool is_lvalue;
 } Expression;
 
+void expression_init_special_ltrl(Expression *expr, bool is_nil, bool bool_flag);
+void expression_init_integer_ltrl(Expression *expr, int32_t value);
+void expression_init_realnum_ltrl(Expression *expr, float value);
+void expression_init_array_ltrl(Expression *expr);
+void expression_init_aggr_ltrl(Expression *expr);
+void expression_init_identifier_ltrl(Expression *expr, char *name);
+void expression_init_term(Expression *expr, Expression *left, Expression *right, char op);
+void expression_init_factor(Expression *expr, Expression *left, Expression *right, char op);
+void expression_init_comparison(Expression *expr, Expression *left, Expression *right, char op);
+void expression_init_equality(Expression *expr, Expression *left, Expression *right, char op);
+void expression_init_conditional(Expression *expr, Expression *left, Expression *right, char op);
+bool expression_append_child(Expression *expr, ExpressionType type, Expression *child);
+void expression_dispose(Expression *expr, ExpressionType type);
+
 typedef struct cask_stmt_t
 {
     union
@@ -152,26 +168,27 @@ typedef struct cask_stmt_t
 
         struct
         {
-            ;
+            char *name;
+            Vector members;
         } aggr_decl;
 
         struct
         {
             char *name;
-            void *param_list;
-            struct cask_stmt_t *body;
+            Vector params;
+            Vector stmt_body;
         } func_decl;
         
         struct
         {
             char *name;
-            Expression *value;
+            uint16_t type_mask;
         } param_decl;
 
         struct
         {
             Expression *condition;
-            struct cask_stmt_t *body;
+            struct cask_stmt_t *block;
         } while_ctrl;
         
         struct
@@ -187,19 +204,32 @@ typedef struct cask_stmt_t
 
         struct
         {
-            void *body_list;
+            Vector stmts;
         } block;
     } contents;
     
     StatementType type;
 } Statement;
 
-typedef struct cask_ast_node_t
-{
-    void *data;
-    bool is_stmt;
-} ASTNode;
+void statement_init_prim_decl(Statement *stmt, char *name, Expression *value, CompositeType high_type, DataType low_type);
+void statement_init_aggr_decl(Statement *stmt, char *name);
+void statement_init_func_decl(Statement *stmt, char *name);
+void statement_init_param_decl(Statement *stmt, char *name, CompositeType high_type, DataType low_type);
+void statement_init_while_ctrl(Statement *stmt, Expression *conditional);
+void statement_init_if_ctrl(Statement *stmt, Expression *conditional);
+void statement_init_else_ctrl(Statement *stmt);
+bool statement_append_child(Statement *stmt, StatementType type, Statement *child);
+void statement_dispose(Statement *stmt, StatementType type);
 
-/// @todo Create helper functions to manage memory, add, delete, set, etc.
+typedef struct cask_program_unit_t
+{
+    Vector statements;
+    char *name;
+} ProgramUnit;
+
+void program_unit_init(ProgramUnit *prog_unit);
+const char *program_unit_view_name(const ProgramUnit *punit);
+bool program_unit_append(ProgramUnit *prog_unit, Statement *stmt_ptr);
+void program_unit_dispose(ProgramUnit *prog_unit);
 
 #endif
