@@ -143,7 +143,7 @@ Token lexer_yield_token(Lexer *lexer)
         else if (predicate_is_symbolic(temp))
             return lexer_lex_by(lexer, CASK_OPERATOR_TOKEN, predicate_is_symbolic);
         else
-            return (Token){.begin = lexer->source_index, .length = 1U, .type = CASK_UNKNOWN_TOKEN};
+            return lexer_lex_single(lexer, CASK_UNKNOWN_TOKEN);
         break;
     }
 }
