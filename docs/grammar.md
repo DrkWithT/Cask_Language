@@ -36,7 +36,8 @@ conditional-expr ::= equality-expr (("||" | "&&") equality-expr)+
 
 ; declaration statements
 decl ::= prim-decl | agg-decl | func-decl
-prim-decl ::= identifier ":" primtype "=" 
+prim-decl ::= identifier ":" primtype "=" (nil_literal | bool_literal | integer-literal | float-literal | string-literal)
+field-decl ::= identifier ":" primtype
 agg-decl ::= "agg" identifier "\{" (prim-decl | agg-decl)+ "\}"
 arr-decl ::= identifier ":" arrtype "=" array-literal
 func-decl ::= "func" identifier "(" (param-decl)* ")" block
