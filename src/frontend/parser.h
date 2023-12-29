@@ -17,8 +17,6 @@ typedef enum parser_error_code_t
     CASK_PARSER_ERR_GENERAL
 } ParserErrorCode;
 
-typedef Expression *(*ExprParseFunc)(void *parser_ptr);
-
 typedef Statement *(*StmtParseFunc)(void *parser_ptr);
 
 /* Parser decl. */
@@ -30,7 +28,6 @@ typedef struct parser_t
 {
     Lexer lexer;
     const StmtParseFunc *stmt_helpers;
-    const ExprParseFunc *expr_helpers;
     Token previous;
     Token current;
 } Parser;
@@ -49,45 +46,49 @@ Token parser_peek_back(const Parser *parser);
 
 StmtParseFunc parser_lookup_helper(const Parser *parser);
 
-Expression *parse_expr_special(void *parser_ptr);
+Expression *parse_expr_special(Parser *parser_ptr);
 
-Expression *parse_expr_numeric(void *parser_ptr);
+Expression *parse_expr_numeric(Parser *parser_ptr);
 
-Expression *parse_expr_string(void *parser_ptr);
+Expression *parse_expr_string(Parser *parser_ptr);
 
-Expression *parse_expr_agg(void *parser_ptr);
+Expression *parse_expr_agg(Parser *parser_ptr);
 
-Expression *parse_expr_array(void *parser_ptr);
+Expression *parse_expr_array(Parser *parser_ptr);
 
-Expression *parse_expr_basic(void *parser_ptr);
+Expression *parse_expr_call(Parser *parser_ptr);
 
-Expression *parse_expr_access(void *parser_ptr);
+Expression *parse_expr_basic(Parser *parser_ptr);
 
-Expression *parse_expr_term(void *parser_ptr);
+Expression *parse_expr_access(Parser *parser_ptr);
 
-Expression *parse_expr_factor(void *parser_ptr);
+Expression *parse_expr_term(Parser *parser_ptr);
 
-Expression *parse_expr_comparison(void *parser_ptr);
+Expression *parse_expr_factor(Parser *parser_ptr);
 
-Expression *parse_expr_equality(void *parser_ptr);
+Expression *parse_expr_comparison(Parser *parser_ptr);
 
-Expression *parse_expr_conditional(void *parser_ptr);
+Expression *parse_expr_equality(Parser *parser_ptr);
+
+Expression *parse_expr_conditional(Parser *parser_ptr);
 
 Statement *parse_decl_primitive(void *parser_ptr);
 
 Statement *parse_decl_field(void *parser_ptr);
 
-Statement *parse_decl_agg(void *parser_ptr);
+Statement *parse_decl_aggregate(void *parser_ptr);
 
 Statement *parse_decl_array(void *parser_ptr);
 
-Statement *parse_decl_any(void *parser_ptr);
+Statement *parse_decl_any_value(void *parser_ptr);
 
 Statement *parse_decl_func(void *parser_ptr);
 
 Statement *parse_decl_param(void *parser_ptr);
 
 Statement *parse_stmt_import(void *parser_ptr);
+
+Statement *parse_stmt_reassign(void *parser_ptr);
 
 Statement *parse_stmt_while(void *parser_ptr);
 

@@ -26,7 +26,8 @@ agg-literal ::= "{" literal ("," literal)* "}"
 array-literal ::= "[" (basic ",")* "]"
 
 ; expressions
-basic ::= nil-literal | bool-literal | integer-literal | float-literal | string-literal | array-literal | agg-literal | identifier | "(" equality-expr ")"
+basic ::= nil-literal | bool-literal | integer-literal | float-literal | string-literal | array-literal | agg-literal | identifier | call-expr | "(" equality-expr ")"
+call-expr ::= identifier "(" (basic){0, 1} ("," basic)* ")"
 access-expr ::= basic "[" integer-literal | string-literal | identifier "]"
 term-expr ::= access-expr (("+" | "-") access-expr)+
 factor-expr ::= term-expr ("*" | "/" term-expr)
