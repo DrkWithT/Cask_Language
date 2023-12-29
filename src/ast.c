@@ -333,3 +333,32 @@ void statement_dispose(Statement *stmt)
         break;
     }
 }
+
+/* ProgramUnit impl. */
+
+void program_unit_init(ProgramUnit *prog_unit, char *name)
+{
+    vector_init_Statement(&prog_unit->statements);
+    prog_unit->name = name;
+}
+
+const char *program_unit_view_name(const ProgramUnit *prog_unit)
+{
+    return prog_unit->name;
+}
+
+bool program_unit_append(ProgramUnit *prog_unit, Statement *stmt_ptr)
+{
+    return vector_append_Statement(&prog_unit->statements, stmt_ptr);
+}
+
+void program_unit_dispose(ProgramUnit *prog_unit)
+{
+    vector_dispose_Statement(&prog_unit->statements, statement_dispose);
+
+    if (prog_unit->name != NULL)
+    {
+        free(prog_unit->name);
+        prog_unit->name = NULL;
+    }
+}

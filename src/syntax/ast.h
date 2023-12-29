@@ -277,9 +277,9 @@ typedef struct cask_program_unit_t
     char *name;
 } ProgramUnit;
 
-void program_unit_init(ProgramUnit *prog_unit);
+void program_unit_init(ProgramUnit *prog_unit, char *name);
 
-const char *program_unit_view_name(const ProgramUnit *punit);
+const char *program_unit_view_name(const ProgramUnit *prog_unit);
 
 bool program_unit_append(ProgramUnit *prog_unit, Statement *stmt_ptr);
 
