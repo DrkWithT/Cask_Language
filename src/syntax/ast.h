@@ -44,6 +44,7 @@ typedef enum cask_expr_type_e
 
 typedef enum cask_stmt_type_e
 {
+    CASK_STMT_IMPORT,
     CASK_STMT_PRIMITIVE_DECL,
     CASK_STMT_FIELD_DECL,
     CASK_STMT_AGGREGATE_DECL,
@@ -178,6 +179,12 @@ typedef struct cask_stmt_t
     {
         struct
         {
+            Vector items;
+            char *name;
+        } import;
+
+        struct
+        {
             char *name;
             Expression *value;
 
@@ -193,14 +200,14 @@ typedef struct cask_stmt_t
 
         struct
         {
-            char *name;
             Vector members;
+            char *name;
         } aggr_decl;
 
         struct
         {
-            char *name;
             Vector params;
+            char *name;
             struct cask_stmt_t *block;
         } func_decl;
         
@@ -235,6 +242,8 @@ typedef struct cask_stmt_t
     
     StatementType type;
 } Statement;
+
+void statement_init_import(Statement *stmt, char *module_name);
 
 void statement_init_prim_decl(Statement *stmt, char *name, Expression *value, CompositeType high_type, DataType low_type);
 

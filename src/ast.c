@@ -2,6 +2,8 @@
  * @file ast.c
  * @author Derek Tan
  * @brief Implements AST interface and helper functions.
+ * @todo Implement import AST node.
+ * @todo Implement ProgramUnit funcs.
  * @date 2023-12-27
  * 
  * @copyright Copyright (c) 2023
@@ -182,6 +184,12 @@ void expression_dispose(Expression *expr)
 }
 
 /* Statement impl. */
+
+void statement_init_import(Statement *stmt, char *module_name)
+{
+    vector_init_Expression(&stmt->contents.import.items);
+    stmt->type = CASK_STMT_IMPORT;
+}
 
 void statement_init_prim_decl(Statement *stmt, char *name, Expression *value, CompositeType high_type, DataType low_type)
 {
