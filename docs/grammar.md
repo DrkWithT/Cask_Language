@@ -45,6 +45,7 @@ param-decl ::= identifier ":" (primtype | aggtype | arrtype)
 
 ; action statements
 import-stmt ::= "from" identifier "import" "*" | (identififer ("," identifier)*)
+reassign-stmt ::= access "=" conditional-expr
 while-stmt ::= "while" "(" conditional-expr ")" block
 if-stmt ::= "if" "(" conditional-expr ")" block (else-stmt){1}
 else-stmt ::= "else" block
